@@ -60,6 +60,16 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON snippetbox.* TO 'web'@'localhost';
 ALTER USER 'web'@'localhost' IDENTIFIED BY '${PASSWDDB}';
 EOF
 
+mysql -D snippetbox -u root -p${RPASS} <<EOF
+CREATE TABLE sessions (
+token CHAR(43) PRIMARY KEY,
+data BLOB NOT NULL,
+expiry TIMESTAMP(6) NOT NULL
+);
+CREATE INDEX sessions_expiry_idx ON sessions (expiry);
+EOF
+
 mysql -D snippetbox -u web -p${PASSWDDB} <<EOF
 SELECT id, title, expires FROM snippets;
+SELECT token, data, expiry FROM sessions;
 EOF
