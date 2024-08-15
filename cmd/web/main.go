@@ -9,6 +9,7 @@ import (
 	"html/template"
 	"os"
 	"time"
+	"crypto/tls"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-playground/form/v4"
@@ -60,15 +61,23 @@ func main() {
 		formDecoder: formDecoder,
 		sessionManager: sessionManager,
 	}
+	tlsConfig := &tls.Config{
+		CurvePreferences: []tls.CurveID{tls.X25519, tls.CurveP256},
+		MinVersion: tls.VersionTLS12,
+	}
 
 	srv := &http.Server{
 		Addr:     *config.addr,
 		ErrorLog: errorLog,
 		Handler:  app.routes(),
+		TLSConfig: tlsConfig,
+		IdleTimeout: time.Minute,
+		ReadTimeout: 5 * time.Second,
+		WriteTimeout: 10 * time.Second,
 	}
 
 	infoLog.Printf("start listening on port %s", *config.addr)
-	err = srv.ListenAndServe()
+	err = srv.ListenAndServeTLS("./tls/cert.pem", "./tls/key.pem")
 	errorLog.Fatal(err)
 }
 
