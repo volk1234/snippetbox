@@ -38,7 +38,7 @@ func MinChars(value string, n int) bool {
 func MaxChars(value string, n int) bool {
 	return utf8.RuneCountInString(value) <= n
 }
-func PermittedInt(value int, permitedValues ...int) bool {
+func PermittedValue[T comparable](value T, permitedValues ...T) bool {
 	for i := range permitedValues {
 		if value == permitedValues[i] {
 			return true
