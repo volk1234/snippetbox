@@ -1,0 +1,11 @@
+.DS_Store
+.ijwb
+.idea
+bazel-*
+go.mod.un~
+go.mod~
+.bazelrc.user
+.bazelrc.aws
+node_modules
+.terraform
+*.bazel.lock
