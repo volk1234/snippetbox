@@ -1,0 +1,8 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "validator",
+    srcs = ["validator.go"],
+    importpath = "snippetbox.sandx.link/internal/validator",
+    visibility = ["//:__subpackages__"],
+)

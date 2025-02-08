@@ -1,0 +1,12 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "mocks",
+    srcs = [
+        "snippets.go",
+        "user.go",
+    ],
+    importpath = "snippetbox.sandx.link/internal/models/mocks",
+    visibility = ["//:__subpackages__"],
+    deps = ["//internal/models"],
+)

@@ -1,0 +1,51 @@
+load("@rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
+
+go_library(
+    name = "web_lib",
+    srcs = [
+        "context.go",
+        "handlers.go",
+        "helpers.go",
+        "main.go",
+        "middleware.go",
+        "routes.go",
+        "templates.go",
+    ],
+    importpath = "snippetbox.sandx.link/cmd/web",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//internal/models",
+        "//internal/validator",
+        "//ui",
+        "@com_github_alexedwards_scs_mysqlstore//:go_default_library",
+        "@com_github_alexedwards_scs_v2//:go_default_library",
+        "@com_github_go_playground_form_v4//:go_default_library",
+        "@com_github_go_sql_driver_mysql//:go_default_library",
+        "@com_github_julienschmidt_httprouter//:go_default_library",
+        "@com_github_justinas_alice//:go_default_library",
+        "@com_github_justinas_nosurf//:go_default_library",
+    ],
+)
+
+go_binary(
+    name = "web",
+    embed = [":web_lib"],
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "web_test",
+    srcs = [
+        "handlers_test.go",
+        "middleware_test.go",
+        "templates_test.go",
+        "testutils_test.go",
+    ],
+    embed = [":web_lib"],
+    deps = [
+        "//internal/assert",
+        "//internal/models/mocks",
+        "@com_github_alexedwards_scs_v2//:go_default_library",
+        "@com_github_go_playground_form_v4//:go_default_library",
+    ],
+)

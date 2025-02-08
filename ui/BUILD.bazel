@@ -1,0 +1,28 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "ui",
+    srcs = ["efs.go"],
+    embedsrcs = [
+        "html/base.tmpl",
+        "html/pages/about.tmpl",
+        "html/pages/account.tmpl",
+        "html/pages/create.tmpl",
+        "html/pages/home.tmpl",
+        "html/pages/login.tmpl",
+        "html/pages/password.tmpl",
+        "html/pages/signup.tmpl",
+        "html/pages/view.tmpl",
+        "html/partials/nav.tmpl",
+        "static/css/index.html",
+        "static/css/main.css",
+        "static/img/favicon.ico",
+        "static/img/index.html",
+        "static/img/logo.png",
+        "static/index.html",
+        "static/js/index.html",
+        "static/js/main.js",
+    ],
+    importpath = "snippetbox.sandx.link/ui",
+    visibility = ["//visibility:public"],
+)
